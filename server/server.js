@@ -1,10 +1,3 @@
-// ============================================
-// server.js - Entry Point
-// ============================================
-// Loads environment variables, connects to MongoDB,
-// and starts the Express server.
-// ============================================
-
 import "dotenv/config"; // Environment variable loading (Node.js: Server Setup)
 import app from "./src/app.js";
 import connectDB from "./src/config/db.config.js";
