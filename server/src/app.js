@@ -13,7 +13,26 @@ import { errorHandler, notFoundHandler } from './middleware/error.middleware.js'
 const app = express(); // Express app instance (Express.js: Application Setup)
 
 // --- Middleware ---
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' })); // CORS middleware (Express.js: Middleware)
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL,
+].filter(Boolean); // removes undefined if CLIENT_URL isn't set
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (
+      !origin || // allow non-browser requests (like curl/Postman)
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/ai-resume-builder-75u8.*\.vercel\.app$/.test(origin) // allow any Vercel preview/production URL for this project
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+})); // CORS middleware (Express.js: Middleware)
+
 app.use(express.json({ limit: '10mb' })); // JSON body parser (Express.js: Middleware)
 
 // --- Routes ---
