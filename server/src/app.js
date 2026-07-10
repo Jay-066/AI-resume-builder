@@ -23,7 +23,7 @@ app.use(cors({
     if (
       !origin || // allow non-browser requests (like curl/Postman)
       allowedOrigins.includes(origin) ||
-      /^https:\/\/ai-resume-builder-75u8.*\.vercel\.app$/.test(origin) // allow any Vercel preview/production URL for this project
+      /^https:\/\/jay-ai-resume-builder.*\.vercel\.app$/.test(origin) // allow any Vercel preview/production URL for this project
     ) {
       callback(null, true);
     } else {
